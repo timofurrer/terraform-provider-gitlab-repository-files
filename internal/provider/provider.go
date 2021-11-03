@@ -69,7 +69,7 @@ func New(version string) func() *schema.Provider {
 			},
 
 			ResourcesMap: map[string]*schema.Resource{
-				"gitlabx_repository_file": resourceGitlabRepositoryFile(),
+				"gitlab_repository_file": resourceGitlabRepositoryFile(),
 			},
 		}
 

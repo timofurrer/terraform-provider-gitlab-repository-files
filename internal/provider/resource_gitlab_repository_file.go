@@ -31,7 +31,18 @@ Therefore, it's recommended to make sure that you execute it with
 [-parallelism=1](https://www.terraform.io/docs/cli/commands/apply.html#parallelism-n)
 and that no other entity than the terraform at hand makes changes to the
 underlying repository while it's executing.
-		`,
+
+` + "```" + `hcl
+resource "gitlab-repository-files_gitlab_repository_file" "this" {
+	project        = gitlab_project.foo.id
+	file_path      = "meow.txt"
+	branch         = "main"
+	content        = base64encode("hello world")
+	author_email   = "meow@catnip.com"
+	author_name    = "Meow Meowington"
+	commit_message = "feature: add launch codes"
+}
+` + "```",
 
 		CreateContext: resourceGitlabRepositoryFileCreate,
 		ReadContext:   resourceGitlabRepositoryFileRead,

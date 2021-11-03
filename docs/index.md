@@ -3,7 +3,7 @@
 page_title: "gitlab-repository-files Provider"
 subcategory: ""
 description: |-
-  
+
 ---
 
 # gitlab-repository-files Provider
@@ -13,7 +13,7 @@ description: |-
 ## Example Usage
 
 ```terraform
-provider "scaffolding" {
+provider "gitlab_repository_files" {
   # example configuration here
 }
 ```

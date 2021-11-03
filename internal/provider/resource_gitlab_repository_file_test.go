@@ -4,34 +4,33 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	gitlab "github.com/xanzy/go-gitlab"
 )
 
-func TestAccGitlabRepositoryFile_create(t *testing.T) {
-	var file gitlab.File
-	rInt := acctest.RandInt()
+// func TestAccGitlabRepositoryFile_create(t *testing.T) {
+// 	var file gitlab.File
+// 	rInt := acctest.RandInt()
 
-	resource.Test(t, resource.TestCase{
-		PreCheck:          func() { testAccPreCheck(t) },
-		ProviderFactories: providerFactories,
-		CheckDestroy:      testAccCheckGitlabRepositoryFileDestroy,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccGitlabRepositoryFileConfig(rInt),
-				Check: resource.ComposeTestCheckFunc(
-					testAccCheckGitlabRepositoryFileExists("gitlab_repository_file.this", &file),
-					testAccCheckGitlabRepositoryFileAttributes(&file, &testAccGitlabRepositoryFileAttributes{
-						FilePath: "meow.txt",
-						Content:  "bWVvdyBtZW93IG1lb3c=",
-					}),
-				),
-			},
-		},
-	})
-}
+// 	resource.Test(t, resource.TestCase{
+// 		PreCheck:          func() { testAccPreCheck(t) },
+// 		ProviderFactories: providerFactories,
+// 		CheckDestroy:      testAccCheckGitlabRepositoryFileDestroy,
+// 		Steps: []resource.TestStep{
+// 			{
+// 				Config: testAccGitlabRepositoryFileConfig(rInt),
+// 				Check: resource.ComposeTestCheckFunc(
+// 					testAccCheckGitlabRepositoryFileExists("gitlab-repository-files_gitlab_repository_file.this", &file),
+// 					testAccCheckGitlabRepositoryFileAttributes(&file, &testAccGitlabRepositoryFileAttributes{
+// 						FilePath: "meow.txt",
+// 						Content:  "bWVvdyBtZW93IG1lb3c=",
+// 					}),
+// 				),
+// 			},
+// 		},
+// 	})
+// }
 
 func TestAccGitlabRepositoryFile_validationOfBase64Content(t *testing.T) {
 	cases := []struct {
@@ -56,183 +55,183 @@ func TestAccGitlabRepositoryFile_validationOfBase64Content(t *testing.T) {
 	}
 }
 
-func TestAccGitlabRepositoryFile_createOnNewBranch(t *testing.T) {
-	var file gitlab.File
-	rInt := acctest.RandInt()
+// func TestAccGitlabRepositoryFile_createOnNewBranch(t *testing.T) {
+// 	var file gitlab.File
+// 	rInt := acctest.RandInt()
 
-	resource.Test(t, resource.TestCase{
-		PreCheck:          func() { testAccPreCheck(t) },
-		ProviderFactories: providerFactories,
-		CheckDestroy:      testAccCheckGitlabRepositoryFileDestroy,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccGitlabRepositoryFileStartBranchConfig(rInt),
-				Check: resource.ComposeTestCheckFunc(
-					testAccCheckGitlabRepositoryFileExists("gitlab_repository_file.this", &file),
-					testAccCheckGitlabRepositoryFileAttributes(&file, &testAccGitlabRepositoryFileAttributes{
-						FilePath: "meow.txt",
-						Content:  "bWVvdyBtZW93IG1lb3c=",
-					}),
-				),
-				// see https://gitlab.com/gitlab-org/gitlab/-/issues/342200
-				SkipFunc: func() (bool, error) {
-					return true, nil
-				},
-			},
-		},
-	})
-}
+// 	resource.Test(t, resource.TestCase{
+// 		PreCheck:          func() { testAccPreCheck(t) },
+// 		ProviderFactories: providerFactories,
+// 		CheckDestroy:      testAccCheckGitlabRepositoryFileDestroy,
+// 		Steps: []resource.TestStep{
+// 			{
+// 				Config: testAccGitlabRepositoryFileStartBranchConfig(rInt),
+// 				Check: resource.ComposeTestCheckFunc(
+// 					testAccCheckGitlabRepositoryFileExists("gitlab-repository-files_gitlab_repository_file.this", &file),
+// 					testAccCheckGitlabRepositoryFileAttributes(&file, &testAccGitlabRepositoryFileAttributes{
+// 						FilePath: "meow.txt",
+// 						Content:  "bWVvdyBtZW93IG1lb3c=",
+// 					}),
+// 				),
+// 				// see https://gitlab.com/gitlab-org/gitlab/-/issues/342200
+// 				SkipFunc: func() (bool, error) {
+// 					return true, nil
+// 				},
+// 			},
+// 		},
+// 	})
+// }
 
-func TestAccGitlabRepositoryFile_update(t *testing.T) {
-	var file gitlab.File
-	rInt := acctest.RandInt()
+// func TestAccGitlabRepositoryFile_update(t *testing.T) {
+// 	var file gitlab.File
+// 	rInt := acctest.RandInt()
 
-	resource.Test(t, resource.TestCase{
-		PreCheck:          func() { testAccPreCheck(t) },
-		ProviderFactories: providerFactories,
-		CheckDestroy:      testAccCheckGitlabRepositoryFileDestroy,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccGitlabRepositoryFileConfig(rInt),
-				Check: resource.ComposeTestCheckFunc(
-					testAccCheckGitlabRepositoryFileExists("gitlab_repository_file.this", &file),
-					testAccCheckGitlabRepositoryFileAttributes(&file, &testAccGitlabRepositoryFileAttributes{
-						FilePath: "meow.txt",
-						Content:  "bWVvdyBtZW93IG1lb3c=",
-					}),
-				),
-			},
-			{
-				Config: testAccGitlabRepositoryFileUpdateConfig(rInt),
-				Check: resource.ComposeTestCheckFunc(
-					testAccCheckGitlabRepositoryFileExists("gitlab_repository_file.this", &file),
-					testAccCheckGitlabRepositoryFileAttributes(&file, &testAccGitlabRepositoryFileAttributes{
-						FilePath: "meow.txt",
-						Content:  "bWVvdyBtZW93IG1lb3cgbWVvdyBtZW93Cg==",
-					}),
-				),
-			},
-		},
-	})
-}
+// 	resource.Test(t, resource.TestCase{
+// 		PreCheck:          func() { testAccPreCheck(t) },
+// 		ProviderFactories: providerFactories,
+// 		CheckDestroy:      testAccCheckGitlabRepositoryFileDestroy,
+// 		Steps: []resource.TestStep{
+// 			{
+// 				Config: testAccGitlabRepositoryFileConfig(rInt),
+// 				Check: resource.ComposeTestCheckFunc(
+// 					testAccCheckGitlabRepositoryFileExists("gitlab-repository-files_gitlab_repository_file.this", &file),
+// 					testAccCheckGitlabRepositoryFileAttributes(&file, &testAccGitlabRepositoryFileAttributes{
+// 						FilePath: "meow.txt",
+// 						Content:  "bWVvdyBtZW93IG1lb3c=",
+// 					}),
+// 				),
+// 			},
+// 			{
+// 				Config: testAccGitlabRepositoryFileUpdateConfig(rInt),
+// 				Check: resource.ComposeTestCheckFunc(
+// 					testAccCheckGitlabRepositoryFileExists("gitlab-repository-files_gitlab_repository_file.this", &file),
+// 					testAccCheckGitlabRepositoryFileAttributes(&file, &testAccGitlabRepositoryFileAttributes{
+// 						FilePath: "meow.txt",
+// 						Content:  "bWVvdyBtZW93IG1lb3cgbWVvdyBtZW93Cg==",
+// 					}),
+// 				),
+// 			},
+// 		},
+// 	})
+// }
 
-func TestAccGitlabRepositoryFile_overwriteExisting(t *testing.T) {
-	var file gitlab.File
-	rInt := acctest.RandInt()
-	filePath := "meow.txt"
+// func TestAccGitlabRepositoryFile_overwriteExisting(t *testing.T) {
+// 	var file gitlab.File
+// 	rInt := acctest.RandInt()
+// 	filePath := "meow.txt"
 
-	// setup function to test when project is managed outside of terraform
-	projectId, err := func() (int, error) {
-		testAccProvider, _ := providerFactories["gitlab-repository-files"]()
-		client := testAccProvider.Meta().(*gitlab.Client)
+// 	// setup function to test when project is managed outside of terraform
+// 	projectId, err := func() (int, error) {
+// 		testAccProvider, _ := providerFactories["gitlab-repository-files"]()
+// 		client := testAccProvider.Meta().(*gitlab.Client)
 
-		createProjectOptions := &gitlab.CreateProjectOptions{
-			Name:                 gitlab.String(fmt.Sprintf("foo-%d", rInt)),
-			InitializeWithReadme: gitlab.Bool(true),
-		}
+// 		createProjectOptions := &gitlab.CreateProjectOptions{
+// 			Name:                 gitlab.String(fmt.Sprintf("foo-%d", rInt)),
+// 			InitializeWithReadme: gitlab.Bool(true),
+// 		}
 
-		project, _, err := client.Projects.CreateProject(createProjectOptions)
-		if err != nil {
-			return -1, fmt.Errorf("setup failed: failed to create project: %s", err)
-		}
+// 		project, _, err := client.Projects.CreateProject(createProjectOptions)
+// 		if err != nil {
+// 			return -1, fmt.Errorf("setup failed: failed to create project: %s", err)
+// 		}
 
-		createFileOptions := &gitlab.CreateFileOptions{
-			Branch:        gitlab.String("main"),
-			Encoding:      gitlab.String("base64"),
-			AuthorEmail:   gitlab.String("test"),
-			AuthorName:    gitlab.String("test"),
-			Content:       gitlab.String("dGVzdA=="),
-			CommitMessage: gitlab.String("test"),
-		}
+// 		createFileOptions := &gitlab.CreateFileOptions{
+// 			Branch:        gitlab.String("main"),
+// 			Encoding:      gitlab.String("base64"),
+// 			AuthorEmail:   gitlab.String("test"),
+// 			AuthorName:    gitlab.String("test"),
+// 			Content:       gitlab.String("dGVzdA=="),
+// 			CommitMessage: gitlab.String("test"),
+// 		}
 
-		_, _, err = client.RepositoryFiles.CreateFile(project.ID, filePath, createFileOptions)
-		if err != nil {
-			return -1, fmt.Errorf("setup failed: failed to create file: %s", err)
-		}
+// 		_, _, err = client.RepositoryFiles.CreateFile(project.ID, filePath, createFileOptions)
+// 		if err != nil {
+// 			return -1, fmt.Errorf("setup failed: failed to create file: %s", err)
+// 		}
 
-		return project.ID, nil
-	}()
+// 		return project.ID, nil
+// 	}()
 
-	if err != nil {
-		fmt.Printf("setup failed: %s\n", err)
-		return
-	}
+// 	if err != nil {
+// 		fmt.Printf("setup failed: %s\n", err)
+// 		return
+// 	}
 
-	defer func(projectId int) {
-		testAccProvider, _ := providerFactories["gitlab-repository-files"]()
-		client := testAccProvider.Meta().(*gitlab.Client)
+// 	defer func(projectId int) {
+// 		testAccProvider, _ := providerFactories["gitlab-repository-files"]()
+// 		client := testAccProvider.Meta().(*gitlab.Client)
 
-		_, err := client.Projects.DeleteProject(projectId, nil)
-		if err != nil {
-			fmt.Printf("teardown failed: failed to delete project: %s\n", err)
-		}
-	}(projectId)
+// 		_, err := client.Projects.DeleteProject(projectId, nil)
+// 		if err != nil {
+// 			fmt.Printf("teardown failed: failed to delete project: %s\n", err)
+// 		}
+// 	}(projectId)
 
-	resource.Test(t, resource.TestCase{
-		PreCheck:          func() { testAccPreCheck(t) },
-		ProviderFactories: providerFactories,
-		CheckDestroy:      testAccCheckGitlabRepositoryFileDestroy,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccGitlabRepositoryFileOverwriteExistingConfig(projectId),
-				Check: resource.ComposeTestCheckFunc(
-					testAccCheckGitlabRepositoryFileExists("gitlab_repository_file.this_overwrite", &file),
-					testAccCheckGitlabRepositoryFileAttributes(&file, &testAccGitlabRepositoryFileAttributes{
-						FilePath: "meow.txt",
-						Content:  "bWVvdyBtZW93IG1lb3cgbWVvdyBtZW93Cg==",
-					}),
-				),
-			},
-		},
-	})
-}
+// 	resource.Test(t, resource.TestCase{
+// 		PreCheck:          func() { testAccPreCheck(t) },
+// 		ProviderFactories: providerFactories,
+// 		CheckDestroy:      testAccCheckGitlabRepositoryFileDestroy,
+// 		Steps: []resource.TestStep{
+// 			{
+// 				Config: testAccGitlabRepositoryFileOverwriteExistingConfig(projectId),
+// 				Check: resource.ComposeTestCheckFunc(
+// 					testAccCheckGitlabRepositoryFileExists("gitlab-repository-files_gitlab_repository_file.this_overwrite", &file),
+// 					testAccCheckGitlabRepositoryFileAttributes(&file, &testAccGitlabRepositoryFileAttributes{
+// 						FilePath: "meow.txt",
+// 						Content:  "bWVvdyBtZW93IG1lb3cgbWVvdyBtZW93Cg==",
+// 					}),
+// 				),
+// 			},
+// 		},
+// 	})
+// }
 
-func TestAccGitlabRepositoryFile_import(t *testing.T) {
-	rInt := acctest.RandInt()
-	resourceName := "gitlab_repository_file.this"
+// func TestAccGitlabRepositoryFile_import(t *testing.T) {
+// 	rInt := acctest.RandInt()
+// 	resourceName := "gitlab-repository-files_gitlab_repository_file.this"
 
-	resource.Test(t, resource.TestCase{
-		PreCheck:          func() { testAccPreCheck(t) },
-		ProviderFactories: providerFactories,
-		CheckDestroy:      testAccCheckGitlabRepositoryFileDestroy,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccGitlabRepositoryFileConfig(rInt),
-			},
-			{
-				ResourceName:            resourceName,
-				ImportStateIdFunc:       getRepositoryFileImportID(resourceName),
-				ImportState:             true,
-				ImportStateVerify:       true,
-				ImportStateVerifyIgnore: []string{"author_email", "author_name", "commit_message"},
-			},
-		},
-	})
-}
+// 	resource.Test(t, resource.TestCase{
+// 		PreCheck:          func() { testAccPreCheck(t) },
+// 		ProviderFactories: providerFactories,
+// 		CheckDestroy:      testAccCheckGitlabRepositoryFileDestroy,
+// 		Steps: []resource.TestStep{
+// 			{
+// 				Config: testAccGitlabRepositoryFileConfig(rInt),
+// 			},
+// 			{
+// 				ResourceName:            resourceName,
+// 				ImportStateIdFunc:       getRepositoryFileImportID(resourceName),
+// 				ImportState:             true,
+// 				ImportStateVerify:       true,
+// 				ImportStateVerifyIgnore: []string{"author_email", "author_name", "commit_message"},
+// 			},
+// 		},
+// 	})
+// }
 
-func getRepositoryFileImportID(n string) resource.ImportStateIdFunc {
-	return func(s *terraform.State) (string, error) {
-		rs, ok := s.RootModule().Resources[n]
-		if !ok {
-			return "", fmt.Errorf("Not Found: %s", n)
-		}
+// func getRepositoryFileImportID(n string) resource.ImportStateIdFunc {
+// 	return func(s *terraform.State) (string, error) {
+// 		rs, ok := s.RootModule().Resources[n]
+// 		if !ok {
+// 			return "", fmt.Errorf("Not Found: %s", n)
+// 		}
 
-		repositoryFileID := rs.Primary.ID
-		if repositoryFileID == "" {
-			return "", fmt.Errorf("No repository file ID is set")
-		}
-		projectID := rs.Primary.Attributes["project"]
-		if projectID == "" {
-			return "", fmt.Errorf("No project ID is set")
-		}
-		branch := rs.Primary.Attributes["branch"]
-		if branch == "" {
-			return "", fmt.Errorf("No branch is set")
-		}
+// 		repositoryFileID := rs.Primary.ID
+// 		if repositoryFileID == "" {
+// 			return "", fmt.Errorf("No repository file ID is set")
+// 		}
+// 		projectID := rs.Primary.Attributes["project"]
+// 		if projectID == "" {
+// 			return "", fmt.Errorf("No project ID is set")
+// 		}
+// 		branch := rs.Primary.Attributes["branch"]
+// 		if branch == "" {
+// 			return "", fmt.Errorf("No branch is set")
+// 		}
 
-		return fmt.Sprintf("%s:%s:%s", projectID, branch, repositoryFileID), nil
-	}
-}
+// 		return fmt.Sprintf("%s:%s:%s", projectID, branch, repositoryFileID), nil
+// 	}
+// }
 
 func testAccCheckGitlabRepositoryFileExists(n string, file *gitlab.File) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
@@ -328,8 +327,8 @@ resource "gitlab_project" "foo" {
   initialize_with_readme = true
 }
 
-resource "gitlab_repository_file" "this" {
-  project = "${gitlab_project.foo.id}"
+resource "gitlab-repository-files_gitlab-repository-files_gitlab_repository_file" "this" {
+  project = "${gitlabx_project.foo.id}"
   file_path = "meow.txt"
   branch = "main"
   content = "bWVvdyBtZW93IG1lb3c="
@@ -354,7 +353,7 @@ resource "gitlab_project" "foo" {
   initialize_with_readme = true
 }
 
-resource "gitlab_repository_file" "this" {
+resource "gitlab-repository-files_gitlab_repository_file" "this" {
   project = "${gitlab_project.foo.id}"
   file_path = "meow.txt"
   branch = "main"
@@ -381,7 +380,7 @@ resource "gitlab_project" "foo" {
   initialize_with_readme = true
 }
 
-resource "gitlab_repository_file" "this" {
+resource "gitlab-repository-files_gitlab_repository_file" "this" {
   project = "${gitlab_project.foo.id}"
   file_path = "meow.txt"
   branch = "main"
@@ -395,7 +394,7 @@ resource "gitlab_repository_file" "this" {
 
 func testAccGitlabRepositoryFileOverwriteExistingConfig(projectId int) string {
 	return fmt.Sprintf(`
-resource "gitlab_repository_file" "this_overwrite" {
+resource "gitlab-repository-files_gitlab_repository_file" "this_overwrite" {
   project = "%d"
   file_path = "meow.txt"
   branch = "main"

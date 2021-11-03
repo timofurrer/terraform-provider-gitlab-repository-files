@@ -121,10 +121,9 @@ func TestAccGitlabRepositoryFile_overwriteExisting(t *testing.T) {
 	rInt := acctest.RandInt()
 	filePath := "meow.txt"
 
-	testAccProvider, _ := providerFactories["gitlab_repository_files"]()
-
 	// setup function to test when project is managed outside of terraform
 	projectId, err := func() (int, error) {
+		testAccProvider, _ := providerFactories["gitlab-repository-files"]()
 		client := testAccProvider.Meta().(*gitlab.Client)
 
 		createProjectOptions := &gitlab.CreateProjectOptions{
@@ -160,6 +159,7 @@ func TestAccGitlabRepositoryFile_overwriteExisting(t *testing.T) {
 	}
 
 	defer func(projectId int) {
+		testAccProvider, _ := providerFactories["gitlab-repository-files"]()
 		client := testAccProvider.Meta().(*gitlab.Client)
 
 		_, err := client.Projects.DeleteProject(projectId, nil)
@@ -254,7 +254,7 @@ func testAccCheckGitlabRepositoryFileExists(n string, file *gitlab.File) resourc
 			return fmt.Errorf("No project ID set")
 		}
 
-		testAccProvider, _ := providerFactories["gitlab_repository_files"]()
+		testAccProvider, _ := providerFactories["gitlab-repository-files"]()
 
 		conn := testAccProvider.Meta().(*gitlab.Client)
 
@@ -290,7 +290,7 @@ func testAccCheckGitlabRepositoryFileAttributes(got *gitlab.File, want *testAccG
 }
 
 func testAccCheckGitlabRepositoryFileDestroy(s *terraform.State) error {
-	testAccProvider, _ := providerFactories["gitlab_repository_files"]()
+	testAccProvider, _ := providerFactories["gitlab-repository-files"]()
 	conn := testAccProvider.Meta().(*gitlab.Client)
 
 	for _, rs := range s.RootModule().Resources {

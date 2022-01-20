@@ -42,6 +42,7 @@ resource "gitlab-repository-files_gitlab_repository_file" "this" {
 	author_name    = "Meow Meowington"
 	commit_message = "feature: add launch codes"
 }
+
 ` + "```",
 
 		CreateContext: resourceGitlabRepositoryFileCreate,
